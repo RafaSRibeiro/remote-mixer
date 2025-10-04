@@ -39,18 +39,41 @@ const meterTrack = css`
   transition: transform 0.1s ease-out;
 `
 
-const minusTwelveDbMark = css`
+const mark = css`
   position: absolute;
-  top: calc(${trackOffset}px + ${trackHeight}px * (1 - 788 / 1023) - 1px);
-  left: ${trackMargin - 4}px;
-  width: calc(${trackWidth}px + 8px);
   height: 2px;
   background: ${iconShade(1)};
   pointer-events: none;
+`
+
+const markLabel = css`
+  position: absolute;
+  left: 100%;
+  margin-left: 4px;
   color: ${textShade(1)};
   font-size: 12px;
   line-height: 0;
 `
+
+interface FaderMarkProps {
+  value: number
+  label: string
+}
+
+function FaderMark({ value, label }: FaderMarkProps) {
+  return (
+    <div
+      className={mark}
+      style={{
+        top: `calc(${trackOffset}px + ${trackHeight}px * (1 - ${value} / 1023) - 1px)`,
+        left: `${trackMargin - 4}px`,
+        width: `calc(${trackWidth}px + 8px)`,
+      }}
+    >
+      <div className={markLabel}>{label}</div>
+    </div>
+  )
+}
 
 export interface FaderBaseProps {
   className?: string
@@ -84,12 +107,12 @@ export function FaderBase({
     >
       {children}
       <div className={track} ref={trackRef}>
+        <FaderMark value={895} label="-6" />
+        <FaderMark value={780} label="-12" />
+        <FaderMark value={673} label="-18" />
+        <FaderMark value={480} label="-30" />
+        <FaderMark value={251} label="-48" />
         {meterRef && <div className={meterTrack} ref={meterRef} />}
-        <div className={minusTwelveDbMark}>
-          <div style={{ position: 'absolute', left: '100%', marginLeft: 4 }}>
-            -12
-          </div>
-        </div>
       </div>
     </Touchable>
   )

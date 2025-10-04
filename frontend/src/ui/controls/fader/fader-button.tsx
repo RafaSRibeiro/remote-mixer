@@ -14,6 +14,7 @@ const button = css`
   height: ${buttonHeight}px;
   background: ${primaryShade(0)};
   color: #fff;
+  opacity: 0.9;
   z-index: 2;
   display: flex;
   align-items: center;
