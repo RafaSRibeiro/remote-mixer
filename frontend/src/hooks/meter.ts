@@ -19,7 +19,7 @@ export function useMeter(
       const value = getState().meters[category.key + id]
       if (value !== oldValue && value !== undefined) {
         oldValue = value
-        const sanitizedValue = Math.max(Math.min(value / 255, 1), 0)
+        const sanitizedValue = 1 - Math.max(Math.min(value / 255, 1), 0)
         meterRef.current.style.transform = `scaleY(${sanitizedValue})`
       }
     }
